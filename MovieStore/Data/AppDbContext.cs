@@ -9,6 +9,7 @@ namespace MovieStore.Data
         public DbSet<ActorMovie> ActorsMovies { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Director> Directors { get; set; }
+        public DbSet<Producer> Producers { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieCinema> MoviesCinemas { get; set; }
@@ -24,6 +25,8 @@ namespace MovieStore.Data
             modelBuilder.Entity<ActorMovie>().HasKey("ActorId", "MovieId");
             modelBuilder.Entity<MovieCinema>().HasKey("MovieId", "CinemaId");
             modelBuilder.Entity<MovieGenre>().HasKey("MovieId", "GenreId");
+
+
 
         }
 

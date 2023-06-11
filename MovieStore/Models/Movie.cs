@@ -10,8 +10,9 @@ namespace MovieStore.Models
         public string? Description { get; set; }
         public double Price { get; set; }
         public string? ImageURL { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int ReleaseDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         //public MovieCategory Genre { get; set; }
 
@@ -20,10 +21,10 @@ namespace MovieStore.Models
         public List<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
 
         [ForeignKey("Director")]
-        public int DirectorId { get; set; }
+        public int? DirectorId { get; set; }
         public Director? Director { get; set; }
         [ForeignKey("Producer")]
-        public int ProducerId { get; set; }
+        public int? ProducerId { get; set; }
         public Producer? Producer { get; set; }
 
 
