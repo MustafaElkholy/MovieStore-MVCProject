@@ -1,0 +1,56 @@
+﻿@model List<Director>
+@{
+    ViewData["Title"] = "Directors";
+
+}
+
+<div class="d-flex justify-content-between">
+    <h1>Directors</h1>
+    <div class="text-white" style="position:fixed; right:25px; bottom:25px">
+        <a asp-action="Create" asp-controller="Director" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Director</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+
+        <table class="table table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Director Name</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Bio</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var director in Model)
+                {
+                    <tr class="text-center">
+                        <td class="align-middle">@director.FullName</td>
+
+                        <td class="align-middle">
+                            <img class="rounded-circle" src="@director.ProfilePictureURL" alt="@director.FullName" style="max-width: 150px" />
+                        </td>
+
+                        <td class="align-middle">@director.Biography</td>
+
+                        <td class="align-middle">
+                            <a asp-action="Details" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-outline-info mb-1"><i class="bi bi-eye"></i></a>
+                            <a asp-action="Edit" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i></a>
+                            <a asp-action="Delete" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+

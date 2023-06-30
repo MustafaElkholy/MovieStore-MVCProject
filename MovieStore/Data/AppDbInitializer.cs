@@ -175,7 +175,6 @@ namespace MovieStore.Data
                     context.SaveChanges();
                 }
 
-
                 if (!context.Directors.Any())
                 {
                     context.Directors.AddRange(new List<Director>()
@@ -221,7 +220,6 @@ namespace MovieStore.Data
                     });
                     context.SaveChanges();
                 }
-
 
                 if (!context.Producers.Any())
                 {

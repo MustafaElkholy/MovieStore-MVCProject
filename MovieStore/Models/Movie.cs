@@ -1,9 +1,10 @@
 ﻿using MovieStore.Data;
+using MovieStore.Repository.GenericRepository;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieStore.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         public int Id { get; set; }
         public string? Name { get; set; }

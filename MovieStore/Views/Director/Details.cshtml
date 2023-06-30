@@ -1,0 +1,83 @@
+﻿@model MovieStore.Models.Director
+
+@{
+    ViewData["Title"] = Model.FullName;
+}
+
+<style>
+    .director-card {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .director-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .director-details {
+        flex: 1 1 60%;
+    }
+
+    .director-name {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .director-bio {
+        margin-bottom: 20px;
+    }
+
+    .director-movies {
+        font-weight: bold;
+    }
+
+    .btn-group {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="director-card">
+                <div class="col-md-4">
+                    <img src="@Model.ProfilePictureURL" alt="Profile Picture" class="director-image" />
+                </div>
+
+                <div class="director-details">
+                    <h4 class="director-name">@Model.FullName</h4>
+                    <hr />
+
+                    <div class="director-bio">
+                        <h5>Biography:</h5>
+                        <p>@Model.Biography</p>
+                    </div>
+
+                    <div class="director-movies">
+                        <h5>Movies:</h5>
+                        <p>@string.Join(", ", Model.Movies.Select(x => x.Name))</p>
+                    </div>
+
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-controller="Director" asp-route-id="@Model.Id" class="btn btn-success me-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a class="btn btn-primary" asp-action="Index">View All Directors</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

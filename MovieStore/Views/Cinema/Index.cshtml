@@ -1,0 +1,50 @@
+﻿@model List<Cinema>
+@{
+    ViewData["Title"] = "Cinema";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div class="text-white" style="position: fixed; right: 25px; bottom: 25px;">
+                    <a asp-action="Create" asp-controller="Cinema" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Cinema</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col">Cinema Name</th>
+                            <th scope="col">Logo</th>
+                            <th scope="col">Location</th>
+                            <th scope="col" style="width: 200px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cinema in Model)
+                        {
+                            <tr class="text-center">
+                                <td class="align-middle">@cinema.Name</td>
+                                <td class="align-middle">
+                                    <img class="rounded-circle" src="@cinema.Logo" alt="@cinema.Name" style="max-width: 150px;" />
+                                </td>
+                                <td class="align-middle text-capitalize">@cinema.Location</td>
+                                <td class="align-middle">
+                                    <a asp-action="Details" asp-controller="Cinema" asp-route-id="@cinema.Id" class="btn btn-outline-info mb-1"><i class="bi bi-eye"></i> </a>
+                                    <a asp-action="Edit" asp-controller="Cinema" asp-route-id="@cinema.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i> </a>
+                                    <a asp-action="Delete" asp-controller="Cinema" asp-route-id="@cinema.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i> </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

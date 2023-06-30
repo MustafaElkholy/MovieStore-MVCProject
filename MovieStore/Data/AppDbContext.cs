@@ -14,6 +14,9 @@ namespace MovieStore.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieCinema> MoviesCinemas { get; set; }
         public DbSet<MovieGenre> MovieGenres { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
         {

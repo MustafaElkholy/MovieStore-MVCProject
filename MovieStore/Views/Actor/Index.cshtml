@@ -1,0 +1,51 @@
+﻿@model List<Actor>
+@{
+    ViewData["Title"] = "Actors";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <h1>Actors Data</h1>
+                <div class="text-white" style="position: fixed; right: 25px; bottom: 25px;">
+                    <a asp-action="Create" asp-controller="Actor" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Actor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col">Actor Name</th>
+                            <th scope="col">Picture</th>
+                            <th scope="col">Bio</th>
+                            <th scope="col" style="width: 200px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var actor in Model)
+                        {
+                            <tr class="text-center">
+                                <td class="align-middle">@actor.FullName</td>
+                                <td class="align-middle">
+                                    <img class="rounded-circle" src="@actor.ProfilePictureURL" alt="@actor.FullName" style="max-width: 150px;" />
+                                </td>
+                                <td class="align-middle text-capitalize">@actor.Biography</td>
+                                <td class="align-middle">
+                                    <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-outline-info mb-1"><i class="bi bi-eye"></i> </a>
+                                    <a asp-action="Edit" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i> </a>
+                                    <a asp-action="Delete" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i> </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

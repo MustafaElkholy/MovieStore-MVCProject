@@ -1,0 +1,68 @@
+﻿@model Movie
+
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header">
+                        <h5 class="card-title">@Model.Name</h5>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <img src="@Model.ImageURL" class="img-fluid" alt="@Model.Name">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Description</p>
+
+                        <p class="card-text">
+                            <b>Director: </b>
+                            <a asp-controller="Director" asp-action="Details" class="link-primary" asp-route-id="@Model.DirectorId">@Model.Director.FullName</a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@string.Join(", ", Model.MovieGenres.Select(x => x.Genre?.GenreName))</p>
+                        <p class="card-text"><b>Release Date: </b>@Model.ReleaseDate</p>
+                        <hr />
+                        <b class="mb-2">Stars:</b>
+                        <div class="row">
+                            @foreach (var actor in Model.MovieActors)
+                            {
+                                <div class="col-4 col-md-2 text-center">
+                                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.ActorId">
+                                        <img class="mb-2 border-info rounded-circle" src="@actor.Actor.ProfilePictureURL" title="@actor.Actor.FullName" style="max-width: 100%;" />
+                                    </a>
+                                    <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.ActorId" class="link-primary">@actor.Actor.FullName</a>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">Movies</a>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                                <i class="bi bi-cart-plus"></i> (Price @Model.Price.ToString("c"))
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .link-primary {
+        text-decoration: none;
+    }
+</style>

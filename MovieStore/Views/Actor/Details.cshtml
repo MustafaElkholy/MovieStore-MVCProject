@@ -1,0 +1,92 @@
+﻿@model MovieStore.Models.Actor
+
+@{
+    ViewData["Title"] = Model.FullName;
+}
+
+<style>
+    .actor-card {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .actor-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .actor-details {
+        flex: 1 1 60%;
+    }
+
+    .actor-name {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .actor-bio {
+        margin-bottom: 20px;
+    }
+
+    .actor-movies {
+        font-weight: bold;
+    }
+
+    .btn-group {
+        margin-top: 20px;
+    }
+
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="actor-card">
+                <div class="col-md-4">
+                    <img src="@Model.ProfilePictureURL" alt="Profile Picture" class="actor-image" />
+                </div>
+
+                <div class="actor-details">
+                    <h4 class="actor-name">@Model.FullName</h4>
+                    <hr />
+
+                    <div class="actor-bio">
+                        <h5>Biography:</h5>
+                        <p>@Model.Biography</p>
+                    </div>
+                    <hr />
+                    <b class="mb-2">Stars In:</b>
+                    <div class="row">
+                        @foreach (var movie in Model.ActorMovies)
+                        {
+                            <div class="col-4 col-md-2 text-center">
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
+                                    <img class="mb-2 border-info rounded-circle" src="@movie.Movie.ImageURL" title="@movie.Movie.Name" style="max-width: 100%;" />
+                                </a>
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId" class="link-primary">@movie.Movie.Name</a>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-controller="Actor" asp-route-id="@Model.Id" class="btn btn-success me-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a class="btn btn-primary" asp-action="Index">View All Actors</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

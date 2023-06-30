@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieStore.Data;
+using MovieStore.Repository.Interface;
+using MovieStore.Repository.Service;
 
 namespace MovieStore
 {
@@ -14,6 +16,11 @@ namespace MovieStore
 
             builder.Services.AddDbContext<AppDbContext>
                 (options => options.UseSqlServer(builder.Configuration.GetConnectionString("constr")));
+
+            builder.Services.AddScoped<IActorRepository, ActorRepository>();
+            builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
+            builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 
             var app = builder.Build();
