@@ -51,14 +51,7 @@
                 </tr>
             </tfoot>
         </table>
-@*
-        <div class="text-center">
-            <div class="btn-group">
-                <div id="paypal-btn"></div>
-                <span style="padding: 5px"></span>
-                <a class="btn btn-outline-success" asp-controller="Movie" asp-action="Index">Add More Movies</a>
-            </div>
-        </div>*@
+
         <div class="d-flex justify-content-center my-3">
             <div class="btn-group mx-2">
                 <a class="btn btn-outline-success @(Model.ShoppingCart.ShoppingCartItems.Count <= 0 ? "disabled" : "")"
@@ -78,52 +71,3 @@
     </div>
 </div>
 
-@*@section Scripts{
-
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
-    <script>
-
-        let _total = @Html.Raw(Model.TotalFees);
-
-        paypal.Button.render({
-            //Configure environment
-            env: 'sandbox',
-            client: {
-                sandbox: 'AafMWw-5GIOU53a9i0CRZWxNsd-TC5FkyjycCduz8I-OsB0Ku_dHhVHAe7hawZT8nm_qT1JBskgTtHeR'
-            },
-
-            //Customize button
-            locale: 'en_US',
-            style: {
-                size: 'small',
-                color: 'gold',
-                shape: 'pill'
-            },
-            commit: true,
-
-            //Set up a payment
-            payment: function (data, actions) {
-                return actions.payment.create({
-                    transactions: [{
-                        amount: {
-                            total: _total,
-                            currency: 'USD'
-                        }
-                    }]
-                });
-
-            },
-
-            //Execute the payment
-            onAuthorize: function (data, actions) {
-                return actions.payment.execute().then(function () {
-                    var url = '@Url.Action("CheckOut", "Order", new { })';
-                    window.location.href = url;
-                });
-            }
-
-        }, '#paypal-btn')
-
-    </script>
-}*@
