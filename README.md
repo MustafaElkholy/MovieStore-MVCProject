@@ -14,7 +14,6 @@ Cineverse is a cutting-edge web application built using ASP.NET Core 7 that allo
    - [Navigating the Application](#navigating-the-application)
 5. [Technologies Used](#technologies-used)
 6. [Contributing](#contributing)
-7. [License](#license)
 
 ## Introduction
 
