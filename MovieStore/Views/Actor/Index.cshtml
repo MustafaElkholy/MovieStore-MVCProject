@@ -8,9 +8,12 @@
         <div class="col-12">
             <div class="d-flex justify-content-between">
                 <h1>Actors Data</h1>
-                <div class="text-white" style=" right: 25px; bottom: 25px;">
-                    <a asp-action="Create" asp-controller="Actor" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Actor</a>
-                </div>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <div class="text-white" style=" right: 25px; bottom: 25px;">
+                        <a asp-action="Create" asp-controller="Actor" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Actor</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -38,8 +41,12 @@
                                 <td class="align-middle text-capitalize">@actor.Biography</td>
                                 <td class="align-middle">
                                     <a asp-action="Details" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-outline-info mb-1"><i class="bi bi-eye"></i> </a>
-                                    <a asp-action="Edit" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i> </a>
-                                    <a asp-action="Delete" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i> </a>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a asp-action="Edit" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i> </a>
+                                        <a asp-action="Delete" asp-controller="Actor" asp-route-id="@actor.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i> </a>
+
+                                    }
                                 </td>
                             </tr>
                         }

@@ -6,9 +6,13 @@
 
 <div class="d-flex justify-content-between">
     <h1>Directors</h1>
-    <div class="text-white" style=" right:25px; bottom:25px">
-        <a asp-action="Create" asp-controller="Director" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Director</a>
-    </div>
+   
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="text-white" style=" right:25px; bottom:25px">
+            <a asp-action="Create" asp-controller="Director" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Director</a>
+        </div>
+    }
 </div>
 
 
@@ -41,8 +45,13 @@
 
                         <td class="align-middle">
                             <a asp-action="Details" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-outline-info mb-1"><i class="bi bi-eye"></i></a>
-                            <a asp-action="Edit" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i></a>
-                            <a asp-action="Delete" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i></a>
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-outline-primary mb-1"><i class="bi bi-pencil-square"></i></a>
+                                <a asp-action="Delete" asp-controller="Director" asp-route-id="@director.Id" class="btn btn-danger text-white mb-1"><i class="bi bi-trash"></i></a>
+
+                            }
                         </td>
                     </tr>
                 }

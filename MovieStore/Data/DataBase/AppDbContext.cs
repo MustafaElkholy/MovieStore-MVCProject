@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MovieStore.Models;
 
-namespace MovieStore.Data
+namespace MovieStore.Data.DataBase
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Actor> Actors { get; set; }
         public DbSet<ActorMovie> ActorsMovies { get; set; }
@@ -15,9 +17,9 @@ namespace MovieStore.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

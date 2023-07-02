@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieStore.Data;
+using MovieStore.Data.DataBase;
 using MovieStore.Models;
 using MovieStore.Repository.GenericRepository;
 using MovieStore.Repository.Interface;

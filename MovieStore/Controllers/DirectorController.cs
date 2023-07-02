@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieStore.Data;
 using MovieStore.Models;
 using MovieStore.Repository.Interface;
+using System.Data;
 
 namespace MovieStore.Controllers
 {
@@ -19,6 +21,7 @@ namespace MovieStore.Controllers
             return View(allProducers);
         }
 
+
         public async Task<IActionResult> Details(int id)
         {
             var director = await directorRepo.GetById(id);
@@ -27,12 +30,15 @@ namespace MovieStore.Controllers
             return View(director);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(Director director)
         {
             if (ModelState.IsValid)
@@ -44,6 +50,7 @@ namespace MovieStore.Controllers
             return View(director);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var actor = await directorRepo.GetById(id);
@@ -52,6 +59,8 @@ namespace MovieStore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id, Director director) 
         {
             if (ModelState.IsValid)
@@ -64,7 +73,8 @@ namespace MovieStore.Controllers
             return View(director);
         }
 
-
+       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
 

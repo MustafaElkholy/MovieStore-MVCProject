@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using MovieStore.Data;
+using MovieStore.Data.DataBase;
 
 namespace MovieStore.Repository.GenericRepository
 {

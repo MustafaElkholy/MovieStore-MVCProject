@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieStore.Data;
+using MovieStore.Data.DataBase;
 using MovieStore.Models;
 using MovieStore.Repository.Interface;
 using System.Diagnostics;

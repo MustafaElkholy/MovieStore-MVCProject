@@ -1,9 +1,12 @@
-﻿using MovieStore.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using MovieStore.Models;
 
-namespace MovieStore.Data
+namespace MovieStore.Data.DataBase
 {
     public class AppDbInitializer
     {
+        public const string AdminRole = "Admin";
+        public const string UserRole = "User";
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
@@ -24,7 +27,7 @@ namespace MovieStore.Data
                                 Price = 39.50,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/3Tf8vXykYhzHdT0BtsYTp570JGQ.jpg",
                                 ReleaseDate = 1972,
-                                
+
                             },
                             new Movie()
                             {
@@ -33,7 +36,7 @@ namespace MovieStore.Data
                                 Price = 33.50,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5ZSfJ9aleg2rGhVWp0Dcqv38Nr5.jpg",
                                 ReleaseDate = 1974,
-                                
+
                             },
                             new Movie()
                             {
@@ -42,7 +45,7 @@ namespace MovieStore.Data
                                 Price = 30.00,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/lyQBXzOQSuE59IsHyhrp0qIiPAz.jpg",
                                 ReleaseDate = 1994,
-                               
+
                             },
                             new Movie()
                             {
@@ -51,7 +54,7 @@ namespace MovieStore.Data
                                 Price = 31.00,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
                                 ReleaseDate = 2023,
-                               
+
                             },
                             new Movie()
                             {
@@ -60,7 +63,7 @@ namespace MovieStore.Data
                                 Price = 31.00,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6yoghtyTpznpBik8EngEmJskVUO.jpg",
                                 ReleaseDate = 1995,
-                               
+
                             },
                            new Movie()
                             {
@@ -69,7 +72,7 @@ namespace MovieStore.Data
                                 Price = 28.00,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/lqwY8LcEpThlYTWOjwDbUxVXZEa.jpg",
                                 ReleaseDate = 1983,
-                               
+
                             },
                            new Movie()
                             {
@@ -78,7 +81,7 @@ namespace MovieStore.Data
                                 Price = 28.00,
                                 ImageURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg",
                                 ReleaseDate = 1990,
-                               
+
                             },
                         }
                     );
@@ -173,6 +176,62 @@ namespace MovieStore.Data
 
 
 
+
+
+            }
+        }
+
+        public static async Task SeedUserAndRoles(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+
+                // Add Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if (!await roleManager.RoleExistsAsync(AdminRole))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(AdminRole));
+                }
+
+                if (!await roleManager.RoleExistsAsync(UserRole))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(UserRole));
+                }
+
+                // add Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                // Add Admin User
+                var adminUser = await userManager.FindByEmailAsync("mustafaelkholy7@gmail.com");
+                if(adminUser is null)
+                {
+                    var newAdminUser = new ApplicationUser()
+                    {
+                        FullName = "Mustafa Elkholy",
+                        UserName = "mustafa_elkholy",
+                        Email = "mustafaelkholy7@gmail.com"
+                        
+                    };
+
+                    await userManager.CreateAsync(newAdminUser,"Mustafa_123456");
+                    await userManager.AddToRoleAsync(newAdminUser, AdminRole);
+                }
+
+                // Add Regular User
+                var regularUser = await userManager.FindByEmailAsync("moazelkholy@gmail.com");
+                if (regularUser is null)
+                {
+                    var newRegularUser = new ApplicationUser()
+                    {
+                        FullName = "Moaz Elkholy",
+                        UserName = "moaz_elkholy",
+                        Email = "moazelkholy@gmail.com"
+
+                    };
+
+                    await userManager.CreateAsync(newRegularUser, "Moaz_123456");
+                    await userManager.AddToRoleAsync(newRegularUser, UserRole);
+                }
 
 
             }

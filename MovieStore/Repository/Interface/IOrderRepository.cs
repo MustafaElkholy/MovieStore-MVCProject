@@ -5,7 +5,7 @@ namespace MovieStore.Repository.Interface
     public interface IOrderRepository
     {
         Task StoreOrder(List<ShoppingCart> items, string userId, string userEmail);
-        Task<List<Order>> GetOrderItemsByUserId(string userId);
+        Task<List<Order>> GetOrderItemsByUserIdAndRole(string userId, string userRole);
 
 
     }

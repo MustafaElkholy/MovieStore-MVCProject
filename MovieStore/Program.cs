@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MovieStore.Data;
+using MovieStore.Data.DataBase;
 using MovieStore.Data.ShoppingCartData;
+using MovieStore.Models;
 using MovieStore.Repository.Interface;
 using MovieStore.Repository.Service;
 
@@ -25,7 +28,25 @@ namespace MovieStore
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped(sc => CartData.GetShopingCart(sc));
 
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
+                {
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequiredLength = 8;
+
+                }
+                ).AddEntityFrameworkStores<AppDbContext>();
+
+            builder.Services.AddMemoryCache();
             builder.Services.AddSession();
+            builder.Services.AddAuthentication(option =>
+            {
+                option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
 
 
             var app = builder.Build();
@@ -44,6 +65,7 @@ namespace MovieStore
             app.UseRouting();
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -51,6 +73,7 @@ namespace MovieStore
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             AppDbInitializer.Seed(app);
+            AppDbInitializer.SeedUserAndRoles(app).Wait();
 
             app.Run();
         }

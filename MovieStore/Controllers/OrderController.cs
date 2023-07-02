@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieStore.Data.ShoppingCartData;
 using MovieStore.Models;
 using MovieStore.Repository.Interface;
 using MovieStore.ViewModels;
+using System.Security.Claims;
 
 namespace MovieStore.Controllers
 {
@@ -18,6 +20,8 @@ namespace MovieStore.Controllers
             this.shoppingCart = shoppingCart;
             this.orderRepo = orderRepo;
         }
+        [Authorize]
+
         public IActionResult Index()
         {
             var items = shoppingCart.GetShoppingCartItems();
@@ -30,23 +34,31 @@ namespace MovieStore.Controllers
             return View(response);
         }
 
+        [Authorize(Roles ="Admin")]
+
         public async Task<IActionResult> ReviewOrders()
         {
-            string userId = "";
-            var allOrders = await orderRepo.GetOrderItemsByUserId(userId);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            var allOrders = await orderRepo.GetOrderItemsByUserIdAndRole(userId, userRole);
             return View(allOrders);
 
         }
+        [Authorize]
+
         public async Task<IActionResult> AddItemToCart(int id)
         {
             var item = await movieRepo.GetById(id);
             if (item != null)
             {
                 shoppingCart.AddItemToCart(item);
-            } 
+            }
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveItemFromCart(int id)
         {
             var item = await movieRepo.GetById(id);
@@ -57,11 +69,15 @@ namespace MovieStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+
         public async Task<IActionResult> CheckOut()
         {
-            var items =  shoppingCart.GetShoppingCartItems();
-            string userId = "";
-            string UserEmail = "";
+            var items = shoppingCart.GetShoppingCartItems();
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); ;
+            string UserEmail = User.FindFirstValue(ClaimTypes.Email);
+
             await orderRepo.StoreOrder(items, userId, UserEmail);
 
             await shoppingCart.ClearShoppingCart();

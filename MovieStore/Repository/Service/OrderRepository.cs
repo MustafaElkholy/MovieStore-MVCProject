@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieStore.Data;
+using MovieStore.Data.DataBase;
 using MovieStore.Models;
 using MovieStore.Repository.Interface;
 
@@ -13,10 +13,16 @@ namespace MovieStore.Repository.Service
         {
             this.context = context;
         }
-        public async Task<List<Order>> GetOrderItemsByUserId(string userId)
+        public async Task<List<Order>> GetOrderItemsByUserIdAndRole(string userId, string userRole)
         {
-            return await context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Movie)
-                .Where(x => x.UserId == userId).ToListAsync();
+            var orders =  await context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Movie).Include(x=>x.AppUser).ToListAsync();
+
+            if (userRole != "Admin")
+            {
+                orders = orders.Where(x => x.UserId == userId).ToList();
+
+            }
+            return orders;
 
          
         }

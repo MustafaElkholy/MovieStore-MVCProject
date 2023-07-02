@@ -1,0 +1,160 @@
+﻿@model MovieStore.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .centered-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+        .centered-form .col-md-4 {
+            margin: 20px;
+        }
+
+    h1 {
+        text-align: center;
+    }
+</style>
+
+
+
+
+<div class="register-container">
+    <h3 class="text-center">Register</h3>
+    <hr />
+
+    <form asp-action="Register">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FullName" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-person icon"></i>
+                </div>
+                <input asp-for="FullName" class="form-control" />
+            </div>
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Username" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-person-lines-fill icon"></i>
+                </div>
+                <input asp-for="Username" class="form-control" />
+            </div>
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-telephone icon"></i>
+                </div>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EmailAddess" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-envelope icon"></i>
+                </div>
+                <input asp-for="EmailAddess" class="form-control" />
+            </div>
+            <span asp-validation-for="EmailAddess" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-lock icon"></i>
+                </div>
+                <input asp-for="Password" class="form-control" />
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="bi bi-lock icon"></i>
+                </div>
+                <input asp-for="ConfirmPassword" class="form-control" />
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="button-container">
+            <a asp-action="Login" asp-controller="Account" class="btn btn-outline-primary register-button">Login</a>
+            <input type="submit" value="Register" class="btn btn-outline-success" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .register-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .login-container h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .register-container form .form-group label {
+            font-weight: bold;
+        }
+
+        .register-container form .form-group .input-group {
+            position: relative;
+        }
+
+        .register-container form .form-group .input-group-prepend {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .register-container form .form-group input {
+            padding-left: 40px;
+        }
+
+            .register-container form .form-group input[type="submit"] {
+                width: 48%;
+            }
+
+        .register-container form .form-group .register-button {
+            width: 48%;
+        }
+
+        .register-container .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+    .icon {
+        margin-right: 5px;
+    }
+</style>

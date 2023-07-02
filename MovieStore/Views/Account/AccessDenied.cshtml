@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Check Out";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .checkout-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+        .checkout-container h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333333;
+            color: red;
+        }
+
+        .checkout-container p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666666;
+        }
+
+        .checkout-container hr {
+            border-color: #dddddd;
+        }
+
+</style>
+
+<div class="container">
+    <div class="checkout-container">
+        <h2>Access Denied</h2>
+        <p>You Are Not Allowed To Access This Page.</p>
+        <hr>
+        <p>Thank you!</p>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Home</a>
+
+    </div>
+</div>

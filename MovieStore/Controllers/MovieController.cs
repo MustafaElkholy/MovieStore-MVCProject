@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieStore.Data;
@@ -22,6 +23,7 @@ namespace MovieStore.Controllers
 
             return View(movies);
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Search(string searchString)
         {
             var movies = await movieRepo.GetAll();
@@ -52,6 +54,7 @@ namespace MovieStore.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             var movieDropDownlistItems = await movieRepo.GetNewMovieDropDownlistValues();
@@ -65,6 +68,8 @@ namespace MovieStore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(MovieViewModel movieModel)
         {
             if (ModelState.IsValid)
@@ -77,6 +82,7 @@ namespace MovieStore.Controllers
             return View(movieModel);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var movie = await movieRepo.GetById(id);
@@ -107,7 +113,10 @@ namespace MovieStore.Controllers
             return View(response);
         }
 
+     
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, MovieViewModel movieModel)
         {
             if (id != movieModel.Id) return View("NotFound");
