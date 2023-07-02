@@ -1,8 +1,126 @@
-﻿@{
+﻿@model List<Movie>
+
+@{
     ViewData["Title"] = "CineVerse";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .card {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .card:hover .card-body {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+
+        .card:hover img {
+            filter: brightness(40%);
+        }
+
+            .card:hover img + .card-body h5,
+            .card:hover img + .card-body p {
+                text-decoration: none;
+                color: #fff;
+            }
+
+    .card-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 80%;
+        padding: 10px;
+        opacity: 0;
+        transition: transform 0.3s ease;
+        text-align: center;
+    }
+
+    .card:hover .card-body {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    h3 {
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+        background-color: #f8f8f8;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+
+    .welcome-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .welcome-text {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .btn-browse {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-browse:hover {
+            background-color: #0056b3;
+        }
+
+</style>
+
+
+
+
+
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col-md-12 text-center">
+            <p class="welcome-text">Welcome to the official <b>CineVerse</b> website. Here you can browse and buy movies in excellent 720p, 1080p, 2160p 4K, and 3D quality, all at the smallest file size.</p>
+            <a asp-controller="Movie" asp-action="Index" class="btn btn-primary btn-browse">Browse Movies</a>
+        </div>
+    </div>
+    <hr />
+    <h3>Featured Movies</h3>
+    <div class="row">
+        @foreach (var movie in Model)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                        <img src="@movie.ImageURL" class="card-img-top" alt="@movie.Name" title="@movie.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Name</h5>
+                            <p class="card-text">
+                                <img src="/Images/logo-imdb (1).svg" alt="@movie.IMDBLink" title="@movie.Name">
+                                @movie.IMDBRating<sub>/10</sub> <i class="fa-solid fa-star" style="color: #d2b914;"></i>
+                            </p>
+                            <p class="card-text">@string.Join(", ", movie.MovieGenres.Select(x => x.Genre?.GenreName))</p>
+                         
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+

@@ -62,35 +62,6 @@ namespace MovieStore.Migrations
                     b.ToTable("ActorsMovies");
                 });
 
-            modelBuilder.Entity("MovieStore.Models.Cinema", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cinemas");
-                });
-
             modelBuilder.Entity("MovieStore.Models.Director", b =>
                 {
                     b.Property<int>("Id")
@@ -147,8 +118,12 @@ namespace MovieStore.Migrations
                     b.Property<int?>("DirectorId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("IMDBLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("IMDBRating")
+                        .HasColumnType("float");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
@@ -159,37 +134,14 @@ namespace MovieStore.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ProducerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReleaseDate")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DirectorId");
 
-                    b.HasIndex("ProducerId");
-
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("MovieStore.Models.MovieCinema", b =>
-                {
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CinemaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieId", "CinemaId");
-
-                    b.HasIndex("CinemaId");
-
-                    b.ToTable("MoviesCinemas");
                 });
 
             modelBuilder.Entity("MovieStore.Models.MovieGenre", b =>
@@ -257,28 +209,6 @@ namespace MovieStore.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("MovieStore.Models.Producer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Biography")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePictureURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Producers");
-                });
-
             modelBuilder.Entity("MovieStore.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -286,6 +216,9 @@ namespace MovieStore.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -326,32 +259,7 @@ namespace MovieStore.Migrations
                         .WithMany("Movies")
                         .HasForeignKey("DirectorId");
 
-                    b.HasOne("MovieStore.Models.Producer", "Producer")
-                        .WithMany("Movies")
-                        .HasForeignKey("ProducerId");
-
                     b.Navigation("Director");
-
-                    b.Navigation("Producer");
-                });
-
-            modelBuilder.Entity("MovieStore.Models.MovieCinema", b =>
-                {
-                    b.HasOne("MovieStore.Models.Cinema", "Cinema")
-                        .WithMany("CinemaMovies")
-                        .HasForeignKey("CinemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MovieStore.Models.Movie", "Movie")
-                        .WithMany("MovieCinemas")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cinema");
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieStore.Models.MovieGenre", b =>
@@ -408,11 +316,6 @@ namespace MovieStore.Migrations
                     b.Navigation("ActorMovies");
                 });
 
-            modelBuilder.Entity("MovieStore.Models.Cinema", b =>
-                {
-                    b.Navigation("CinemaMovies");
-                });
-
             modelBuilder.Entity("MovieStore.Models.Director", b =>
                 {
                     b.Navigation("Movies");
@@ -427,19 +330,12 @@ namespace MovieStore.Migrations
                 {
                     b.Navigation("MovieActors");
 
-                    b.Navigation("MovieCinemas");
-
                     b.Navigation("MovieGenres");
                 });
 
             modelBuilder.Entity("MovieStore.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("MovieStore.Models.Producer", b =>
-                {
-                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

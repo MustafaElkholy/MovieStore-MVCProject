@@ -3,16 +3,16 @@
     ViewData["Title"] = "Movies";
 }
 <div class="container">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Browse Movies</h1>
-        <div class="text-white" style="right: 25px; bottom: 25px;">
+        <div class="text-end">
             <a asp-action="Create" asp-controller="Movie" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Movie</a>
         </div>
     </div>
 </div>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2">
-    
+
     @foreach (var movie in Model)
     {
         <div class="col">
@@ -20,25 +20,37 @@
                 <div class="aspect-ratio-container">
                     <img src="@movie.ImageURL" class="card-img-top aspect-ratio-content" alt="@movie.Name" title="@movie.Name">
                 </div>
+
                 <div class="card-body">
-                    <h5 class="card-title fs-5">@movie.Name</h5>
-                    <p class="card-text fs-6"> @string.Join(", ", movie.MovieGenres.Select(x => x.Genre?.GenreName))</p>
-                    <p class="card-text fs-6"><strong>Plot: </strong>@movie.Description</p>
-                    <p class="card-text fs-6"><strong>Stars: </strong>@string.Join(", ", movie.MovieActors.Select(x => x.Actor?.FullName))</p>
+                    <div class="title-rating-container mb-0">
+                        <p style="width:180px; white-space: nowrap;overflow: hidden; text-overflow: ellipsis; " class="card-title fs-5 fw-semibold">@movie.Name</p>
+                        <p class="fw-bold mb-0 flex-grow-1 text-end">
+                            <a href="@movie.IMDBLink"><img src="/Images/logo-imdb (1).svg" alt="@movie.IMDBLink" title="@movie.Name"></a>
+                            @movie.IMDBRating<sub>/10</sub> <i class="fa-solid fa-star" style="color: #d2b914;"></i>
+                        </p>
+                    </div>
+                    <p class="mt-0 mb-1">(@movie.ReleaseDate)</p>
+                    <p class="card-text fs-6 mb-0">@string.Join("/ ", movie.MovieGenres.Select(x => x.Genre?.GenreName))</p>
+                    <p class="card-text fs-6 mb-0"><strong>Stars: </strong>@string.Join(", ", movie.MovieActors.Select(x => x.Actor?.FullName))</p>
                     <p class="card-text fs-6"><strong>Directed By: </strong>@string.Join(", ", movie.Director?.FullName)</p>
-                    
                 </div>
+
+
 
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-6">
-                            <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> Details</a>
+
+                            <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info btn-sm my-custom-button">
+                                <i class="bi bi-eye-fill me-2"></i>Details
+                            </a>
+
                             <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> </a>
 
                         </div>
-                        
+
                         <div class="col-6 text-end">
-                            <a class="btn btn-success btn-sm text-white">
+                            <a class="btn btn-success btn-sm text-white" asp-controller="Order" asp-action="AddItemToCart" asp-route-id="@movie.Id">
                                 <i class="bi bi-cart-plus"></i> (@movie.Price.ToString("c"))
                             </a>
                         </div>
@@ -78,4 +90,28 @@
         font-size: 0.9rem;
         margin-bottom: 0.3rem;
     }
+
+    .title-rating-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text-end {
+        text-align: end;
+    }
+
+    .my-custom-button {
+        background-color: #17a2b8;
+        color: white;
+        border-color: #17a2b8;
+    }
+
+        .my-custom-button:hover {
+            background-color: #138496;
+            border-color: #138496;
+        }
+
+
+
 </style>

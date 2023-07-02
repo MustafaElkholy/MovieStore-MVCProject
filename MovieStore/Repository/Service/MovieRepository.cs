@@ -27,7 +27,7 @@ namespace MovieStore.Repository.Service
         {
             return await context.Movies.Include(x => x.MovieActors).ThenInclude(x => x.Actor)
                 .Include(x => x.Director).Include(x => x.MovieGenres).ThenInclude(x => x.Genre).
-                OrderBy(m => m.ReleaseDate).ToListAsync();
+                OrderByDescending(m => m.IMDBRating).ToListAsync();
 
         }
 
@@ -53,7 +53,10 @@ namespace MovieStore.Repository.Service
                 ImageURL = newMovieModel.ImageURL,
                 Price = newMovieModel.Price,
                 ReleaseDate = newMovieModel.ReleaseDate,
-                DirectorId = newMovieModel.DirectorId
+                DirectorId = newMovieModel.DirectorId,
+                IMDBLink = newMovieModel.IMDBLink,
+                IMDBRating = newMovieModel.IMDBRating
+
 
             };
 
@@ -100,6 +103,8 @@ namespace MovieStore.Repository.Service
                 movieFromDB.Price = newMovieModel.Price;
                 movieFromDB.ReleaseDate = newMovieModel.ReleaseDate;
                 movieFromDB.DirectorId = newMovieModel.DirectorId;
+                movieFromDB.IMDBLink = newMovieModel.IMDBLink;
+                movieFromDB.IMDBRating = newMovieModel.IMDBRating;
 
                 await context.SaveChangesAsync();
             }

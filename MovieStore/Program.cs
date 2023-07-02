@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieStore.Data;
+using MovieStore.Data.ShoppingCartData;
 using MovieStore.Repository.Interface;
 using MovieStore.Repository.Service;
 
@@ -19,8 +20,12 @@ namespace MovieStore
 
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
             builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
-            builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped(sc => CartData.GetShopingCart(sc));
+
+            builder.Services.AddSession();
 
 
             var app = builder.Build();
@@ -37,6 +42,7 @@ namespace MovieStore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

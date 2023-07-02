@@ -25,6 +25,12 @@ namespace MovieStore.ViewModels
         [Display(Name = "Release Date")]
         [Required(ErrorMessage = "Release Date Is Required")]
         public int ReleaseDate { get; set; }
+        [Display(Name = "IMDB Rating")]
+        [Required(ErrorMessage = "IMDB Rating Is Required")]
+        public double IMDBRating { get; set; }
+        [Display(Name = "IMDB Link")]
+        [Required(ErrorMessage = "IMDB Link Is Required")]
+        public string IMDBLink { get; set; }
 
         //Relationships
 

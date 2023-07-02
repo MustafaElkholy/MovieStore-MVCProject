@@ -9,16 +9,23 @@
         <div class="card mb-12">
             <div class="row g-0">
                 <div class="col-md-12">
-                    <div class="card-header">
-                        <h5 class="card-title">@Model.Name</h5>
+                   
+                    <div class="title-rating-container card-header ">
+                        <h4 class="card-title fs-5">@Model.Name (@Model.ReleaseDate)</h4>
+                        <p class="fw-bold mb-0 flex-grow-1 text-end">
+                            <a href="@Model.IMDBLink"><img src="/Images/logo-imdb (1).svg" alt="@Model.IMDBLink" title="@Model.Name"></a>
+                            @Model.IMDBRating<sub>/10</sub> <i class="fa-solid fa-star" style="color: #d2b914;"></i>
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <img src="@Model.ImageURL" class="img-fluid" alt="@Model.Name">
                 </div>
+
+               
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">@Model.Description</p>
+                        <p class="card-text"><strong>Plot: </strong>@Model.Description</p>
 
                         <p class="card-text">
                             <b>Director: </b>
@@ -50,7 +57,7 @@
                             <a class="btn btn-outline-primary float-right" asp-action="Index">Movies</a>
                         </div>
                         <div class="col-6 text-end">
-                            <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                            <a class="btn btn-success text-white" asp-controller="Order" asp-action="AddItemToCart" asp-route-id="@Model.Id">
                                 <i class="bi bi-cart-plus"></i> (Price @Model.Price.ToString("c"))
                             </a>
                         </div>
@@ -65,4 +72,14 @@
     .link-primary {
         text-decoration: none;
     }
+      .title-rating-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text-end {
+        text-align: end;
+    }
+
 </style>

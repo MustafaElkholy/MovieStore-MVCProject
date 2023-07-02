@@ -60,12 +60,19 @@
 
                     <div class="director-bio">
                         <h5>Biography:</h5>
-                        <p>@Model.Biography</p>
+                        <p class="text-capitalize">@Model.Biography</p>
                     </div>
 
-                    <div class="director-movies">
-                        <h5>Movies:</h5>
-                        <p>@string.Join(", ", Model.Movies.Select(x => x.Name))</p>
+                    <div class="row">
+                        @foreach (var movie in Model.Movies)
+                        {
+                            <div class="col-4 col-md-2 text-center">
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                                    <img class="mb-2 border-info rounded-circle" src="@movie.ImageURL" title="@movie.Name" style="max-width: 100%;" />
+                                </a>
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="link-primary text-decoration-none">@movie.Name</a>
+                            </div>
+                        }
                     </div>
 
                     <div class="btn-group">

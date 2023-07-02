@@ -12,6 +12,18 @@
         "font/bootstrap-icons.json",
         "font/bootstrap-icons.min.css"
       ]
+    },
+    {
+      "library": "font-awesome@6.4.0",
+      "destination": "wwwroot/font-awesome/"
+    },
+    {
+      "library": "font-awesome-animation@1.1.0",
+      "destination": "wwwroot/font-awesome-animation/"
+    },
+    {
+      "library": "fontawesome-iconpicker@3.2.0",
+      "destination": "wwwroot/fontawesome-iconpicker/"
     }
   ]
 }

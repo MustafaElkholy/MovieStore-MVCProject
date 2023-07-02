@@ -29,17 +29,11 @@ namespace MovieStore.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                //var searchResult = movies.
-                //    Where(x=>x.MovieGenres.Contains).ToList();
+               
 
                 var searchResult = movies
                     .Where(movie => movie.Name.ToLower().Contains(searchString.ToLower().Trim())
-                     || movie.Description.ToLower().Contains(searchString.ToLower().Trim())
                      || movie.MovieGenres.Select(x => x.Genre.GenreName.ToLower()).Contains(searchString.ToLower().Trim())).ToList();
-
-
-                
-
 
 
                 return View("Index", searchResult);
@@ -97,6 +91,8 @@ namespace MovieStore.Controllers
                 DirectorId = movie.DirectorId,
                 Price = movie.Price,
                 ReleaseDate = movie.ReleaseDate,
+                IMDBRating = movie.IMDBRating,
+                IMDBLink = movie.IMDBLink,
                 ActorIds = movie.MovieActors.Select(x => x.ActorId).ToList(),
                 GenereId = movie.MovieGenres.Select(x => x.GenreId).ToList(),
 

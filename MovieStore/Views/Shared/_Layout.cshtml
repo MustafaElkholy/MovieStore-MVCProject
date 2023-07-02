@@ -11,15 +11,25 @@
     <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/to/bootstrap.min.css">
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
 
-
+    <link href="~/fontawesome-iconpicker/css/fontawesome-iconpicker.css" rel="stylesheet" />
+    <link href="~/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css" rel="stylesheet" />
 
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CineVerse</a>
+                <a class="navbar-brand" style="font-family: 'Bauhaus 93'" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-collection-play-fill"></i> CineVerse
+                </a>
+
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="/Images/cineverse-low-resolution-logo-color-on-transparent-background.png" alt="CineVerse">
+                </a>*@
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,20 +37,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark badge-info bi-film" asp-area="" asp-controller="Movie" asp-action="Index"> Movies</a>
-                            </li>
+                          
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bi bi-gear"></i> Management
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" asp-controller="Cinema" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a>
-                                    <a class="dropdown-item" asp-controller="Director" asp-action="Index"><i class="bi bi-headset"></i> Directors</a>
-                                    <a class="dropdown-item" asp-controller="Actor" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a>
-                                </div>
-                            </li>
+                            @*    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bi bi-gear"></i> Management
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="Cinema" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a>
+                            <a class="dropdown-item" asp-controller="Director" asp-action="Index"><i class="bi bi-headset"></i> Directors</a>
+                            <a class="dropdown-item" asp-controller="Actor" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a>
+                            </div>
+                            </li>*@
 
                         </ul>
 
@@ -48,10 +56,62 @@
                             <div class="input-group">
                                 <input name="searchString" type="text" class="form-control" placeholder="Search for a movie..." aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
                                 </div>
                             </div>
                         </form>
+                        <ul class="navbar-nav">
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark badge-info bi-film" asp-area="" asp-controller="Movie" asp-action="Index"> Browse Movies</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav">
+
+                            @await Component.InvokeAsync("ShoppingCartSummary")
+                        </ul>
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="bi bi-person-badge"></i> Hello User
+                            </button>
+
+
+                            <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Order" asp-action="ReviewOrders">
+                                        <i class="bi bi-list"></i> Orders
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bi bi-gear"></i> Management
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="managementDropdown">
+
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Movie" asp-action="Index">
+                                                <i class="bi bi-film"></i> Movies
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Director" asp-action="Index">
+                                                <i class="bi bi-headset"></i> Directors
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Actor" asp-action="Index">
+                                                <i class="bi bi-person-square"></i> Actors 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+                        </div>
                 </div>
             </div>
         </nav>
@@ -63,8 +123,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - MovieStore - Made By Mustafa Elkholy
+        <div class="container text-center">
+            &copy; 2023 - CineVerse - Made By ITI GEEKS
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -74,6 +134,34 @@
 
     <script src="~/lib/jquery.min.js"></script>
     <script src="~/lib/bootstrap.min.js"></script>
+
+
+    <script>
+        var dropdownToggleList = Array.from(document.querySelectorAll('.dropdown-toggle'));
+        dropdownToggleList.map(function (dropdownToggle) {
+            dropdownToggle.addEventListener('click', function (event) {
+                dropdownToggle.parentNode.classList.toggle('show');
+                event.stopPropagation();
+            });
+        });
+
+        document.addEventListener('click', function (event) {
+            var dropdownMenus = Array.from(document.querySelectorAll('.dropdown-menu'));
+            dropdownMenus.map(function (dropdownMenu) {
+                if (!dropdownMenu.classList.contains('show')) return;
+                dropdownMenu.parentNode.classList.remove('show');
+            });
+        });
+    </script>
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+@*<style>
+    .navbar-brand img {
+        max-height: 40px;
+        width: auto;
+    }
+</style>*@
