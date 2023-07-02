@@ -37,8 +37,7 @@
 #*.modelproj merge=binary
 #*.sqlproj   merge=binary
 #*.wwaproj   merge=binary
-*.cs          linguist-language=C#
-* linguist-vendored
+
 
 ###############################################################################
 # behavior for image files
